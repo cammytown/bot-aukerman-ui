@@ -1,0 +1,17 @@
+[project]
+name = "bot-aukerman-ui"
+version = "0.1.0"
+description = "Official interface for bot-aukerman; a library for improvised performances using AI chatbot (and human) characters."
+authors = [ { name = "Cammy", email = "cameronsteele@steelecameron.com" } ]
+readme = "README.md"
+requires-python = ">=3.9.0,<3.11"
+dependencies = [
+	#"gradio >= 3.28.3",
+	"Django >=4.2.1, <5.0",
+
+	#"bot_aukerman @ git+https://github.com/cammytown/bot-aukerman.git",
+]
+
+[build-system]
+requires = ["setuptools >= 67.7.2", "wheel >=0.40.0"]
+build-backend = "setuptools.build_meta"

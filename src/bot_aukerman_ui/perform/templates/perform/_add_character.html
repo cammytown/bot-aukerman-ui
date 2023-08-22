@@ -1,0 +1,35 @@
+<div class="character">
+	<div class="form-group">
+		<label for="character_name">Character Name</label>
+
+		<input
+			type="text"
+			class="form-control"
+			id="character_name"
+			name="character_names[]"
+			placeholder="Character Name">
+	</div>
+
+	<div class="form-group">
+		<label for="character_description">Character Description</label>
+
+		<textarea
+			class="form-control"
+			id="character_description"
+			name="character_descriptions[]"
+			rows="3"
+			placeholder="Character Description"></textarea>
+	</div>
+
+	<a
+		hx-delete="{% url 'delete_character' 1 %}"
+		hx-target="closest .character"
+		hx-swap="outerHTML"
+	>
+		Delete Character
+	</a>
+</div>
+
+<a hx-post="{% url 'add_character' %}" hx-target="this" hx-swap="outerHTML">
+	Add Character
+</a>

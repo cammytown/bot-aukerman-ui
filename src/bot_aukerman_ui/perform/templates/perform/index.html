@@ -1,0 +1,53 @@
+{% extends "perform/base.html" %}
+
+{% block title %}Perform{% endblock %}
+
+{% block head %}
+	{% comment %}<link rel="stylesheet" href="{% static 'perform/perform.css' %}">{% endcomment %}
+	{% comment %}<script src="{% static 'perform/htmx.min.js' %}"></script>       {% endcomment %}
+{% endblock %}
+
+{% block content_class %}perform{% endblock %}
+
+{% block content %}
+<div id="content">
+	<form
+		class="performance"
+		hx-post="{% url 'start_performance' %}"
+		hx-target="#performance"
+		hx-swap="outerHTML"
+	>
+		<h1>Perform</h1>
+
+		<label for="scene_description">Scene Description</label>
+
+		<textarea
+			class="form-control"
+			id="scene_description"
+			name="scene_description"
+			rows="3"
+			placeholder="Scene Description">
+		</textarea>
+
+		<div class="characters">
+			{% include "perform/_add_character.html" %}
+		</div>
+
+		<textarea
+			class="form-control"
+			id="context"
+			name="context"
+			rows="5"
+			placeholder="FROG: Well, hello there, mister human.
+HOMELESS MAN: A— a talking frog?">
+		</textarea>
+
+		<button type="submit" class="btn btn-primary">
+			Start Performance
+		</button>
+	</form>
+
+	<div id="performance">
+	</div>
+</div>
+{% endblock %}

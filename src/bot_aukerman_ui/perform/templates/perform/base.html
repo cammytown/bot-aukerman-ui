@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>{% block title %}{% endblock %}</title>
+
+		{% load static %}
+
+		<link rel="stylesheet" href="{% static 'perform/perform.css' %}">
+		<script src="{% static 'perform/htmx.min.js' %}"></script>
+
+		{% block head %}{% endblock %}
+	</head>
+
+	<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+		<nav id="main-menu">
+			<ul>
+				<li><a href="{% url 'index' %}">Home</a></li>
+			</ul>
+		</nav>
+
+		<div id="content" class="{% block content_class %}{% endblock %}">
+			{% block content %}{% endblock %}
+		</div>
+	</body>
+</html>
