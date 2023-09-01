@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from bot_aukerman import Performance, BotPerformer, HumanPerformer
 from .performance_service import PerformanceService
 
 service = PerformanceService()
@@ -19,49 +18,28 @@ def delete_character(request, character_id):
 def start_performance(request):
     print("Starting performance")
 
-    # Create a Performance
-    model_config = {
-        "model": "gpt2-large"
-        # "model": "gpt2"
-        # "model": "gpt4all-7B-unfiltered", "engine": "llamacpp"
-        # "model": "text-ada-001", "engine": "openai",
-        # "engine": "openai",
-    }
+    #@REVISIT is passing request.POST a good idea?
+    service.start(request.POST)
 
-    # For each character, create a BotPerformer
-    character_names = request.POST.getlist("character_names[]")
-    character_descs = request.POST.getlist("character_descriptions[]")
+    return get_performance_status(request)
 
-    performance = Performance(model_config = model_config,
-                              resume_from_log = False)
+def get_performance_status(request):
+    print("Getting performance status")
 
-    for character_name, character_desc in zip(character_names, character_descs):
-        character = BotPerformer(
-            character_name=character_name,
-            character_desc=character_desc,
-        )
+    status = service.get_status()
 
-        print(f"Adding character {character_name} with description {character_desc}")
+    return render(request, "perform/_performance_status.html", {
+        "script": status["script"],
+        "characters": status["characters"],
+    })
 
-        performance.add_performer(character)
+def toggle_microphone(self):
+    print("Toggling microphone")
 
-    # Add a scene description
-    scene_desc = request.POST.get("scene_description")
-    print(f"Adding scene description {scene_desc}")
-    performance.add_description(scene_desc)
+    assert(service.performance is not None)
 
-    # Add any initial dialogue
-    context = request.POST.get("context")
-    print(f"Adding context {context}")
-    performance.add_dialogue(context)
+    # Toggle microphone
+    service.performance.toggle_microphone_listen()
 
-    # Add a human performer
-    human = HumanPerformer(character_name="Cammy")
-    performance.add_performer(human)
-
-    # Start the performance
-    print("Starting performance")
-
-    service.start(performance)
-
-    return HttpResponse('<div id="performance">Started...</div>')
+    #@REVISIT
+    return HttpResponse("On" if service.performance.is_listening else "Off")

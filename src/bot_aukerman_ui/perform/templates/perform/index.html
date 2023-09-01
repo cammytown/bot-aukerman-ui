@@ -42,12 +42,34 @@
 HOMELESS MAN: A— a talking frog?">
 		</textarea>
 
-		<button type="submit" class="btn btn-primary">
+		<button type="submit" class="btn btn-primary" id="start-performance">
 			Start Performance
 		</button>
+
+		<a
+			class="btn btn-primary"
+			id="toggle-microphone"
+			hx-post="{% url 'toggle_microphone' %}"
+			hx-target="#microphone-status"
+			hx-swap="innerHTML"
+		>
+			Toggle Microphone Listen
+		</a>
+		<span id="microphone-status">Off</span>
 	</form>
 
 	<div id="performance">
+	</div>
+
+	<div id="hotkeys">
+		<ul>
+			<li>
+				<kbd>Ctrl</kbd> + <kbd>Enter</kbd> - Start Performance
+			</li>
+
+			<li>
+				<kbd>Ctrl</kbd> + <kbd>Space</kbd> - Toggle Microphone Listen
+			</li>
 	</div>
 </div>
 {% endblock %}
