@@ -10,14 +10,16 @@
 {% block content_class %}perform{% endblock %}
 
 {% block content %}
-<div id="content">
-	<form
-		class="performance"
-		hx-post="{% url 'start_performance' %}"
-		hx-target="#performance"
-		hx-swap="outerHTML"
-	>
-		<h1>Perform</h1>
+<form
+	class="performance"
+	hx-post="{% url 'start_performance' %}"
+	hx-target="#performance"
+	hx-swap="outerHTML"
+>
+	<h1>Perform</h1>
+
+	<fieldset>
+		<legend>Scene</legend>
 
 		<label for="scene_description">Scene Description</label>
 
@@ -26,12 +28,19 @@
 			id="scene_description"
 			name="scene_description"
 			rows="3"
-			placeholder="Scene Description">
-		</textarea>
+			placeholder="A lovely park on a sunny day."></textarea>
+	</fieldset>
+
+	<fieldset class="characters">
+		<legend>Characters</legend>
 
 		<div class="characters">
 			{% include "perform/_add_character.html" %}
 		</div>
+	</fieldset>
+
+	<fieldset>
+		<legend>Starting Context</legend>
 
 		<textarea
 			class="form-control"
@@ -39,9 +48,10 @@
 			name="context"
 			rows="5"
 			placeholder="FROG: Well, hello there, mister human.
-HOMELESS MAN: A— a talking frog?">
-		</textarea>
+HOMELESS MAN: A— a talking frog?"></textarea>
+	</fieldset>
 
+	<fieldset>
 		<button type="submit" class="btn btn-primary" id="start-performance">
 			Start Performance
 		</button>
@@ -56,20 +66,20 @@ HOMELESS MAN: A— a talking frog?">
 			Toggle Microphone Listen
 		</a>
 		<span id="microphone-status">Off</span>
-	</form>
+	</fieldset>
+</form>
 
-	<div id="performance">
-	</div>
+<div id="performance">
+</div>
 
-	<div id="hotkeys">
-		<ul>
-			<li>
-				<kbd>Ctrl</kbd> + <kbd>Enter</kbd> - Start Performance
-			</li>
+<div id="hotkeys">
+	<ul>
+		<li>
+			<kbd>Ctrl</kbd> + <kbd>Enter</kbd> - Start Performance
+		</li>
 
-			<li>
-				<kbd>Ctrl</kbd> + <kbd>Space</kbd> - Toggle Microphone Listen
-			</li>
-	</div>
+		<li>
+			<kbd>Ctrl</kbd> + <kbd>Space</kbd> - Toggle Microphone Listen
+		</li>
 </div>
 {% endblock %}
