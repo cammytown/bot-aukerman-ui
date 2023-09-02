@@ -1,85 +1,25 @@
 {% extends "perform/base.html" %}
 
-{% block title %}Perform{% endblock %}
+{% block title %}Bot Aukerman{% endblock %}
 
-{% block head %}
-	{% comment %}<link rel="stylesheet" href="{% static 'perform/perform.css' %}">{% endcomment %}
-	{% comment %}<script src="{% static 'perform/htmx.min.js' %}"></script>       {% endcomment %}
-{% endblock %}
-
-{% block content_class %}perform{% endblock %}
+{% block content_class %}index{% endblock %}
 
 {% block content %}
-<form
-	class="performance"
-	hx-post="{% url 'start_performance' %}"
-	hx-target="#performance"
-	hx-swap="outerHTML"
->
-	<h1>Perform</h1>
+<h2>Performances</h2>
 
-	<fieldset>
-		<legend>Scene</legend>
+<a href="{% url 'create_performance' %}">Create Performance</a>
 
-		<label for="scene_description">Scene Description</label>
-
-		<textarea
-			class="form-control"
-			id="scene_description"
-			name="scene_description"
-			rows="3"
-			placeholder="A lovely park on a sunny day."></textarea>
-	</fieldset>
-
-	<fieldset class="characters">
-		<legend>Characters</legend>
-
-		<div class="characters">
-			{% include "perform/_add_character.html" %}
-		</div>
-	</fieldset>
-
-	<fieldset>
-		<legend>Starting Context</legend>
-
-		<textarea
-			class="form-control"
-			id="context"
-			name="context"
-			rows="5"
-			placeholder="FROG: Well, hello there, mister human.
-HOMELESS MAN: A— a talking frog?"></textarea>
-	</fieldset>
-
-	<fieldset>
-		<button type="submit" class="btn btn-primary" id="start-performance">
-			Start Performance
-		</button>
-
-		<a
-			class="btn btn-primary"
-			id="toggle-microphone"
-			hx-post="{% url 'toggle_microphone' %}"
-			hx-target="#microphone-status"
-			hx-swap="innerHTML"
-		>
-			Toggle Microphone Listen
-		</a>
-		<span id="microphone-status">Off</span>
-	</fieldset>
-</form>
-
-<div id="performance">
-</div>
-
-<div id="hotkeys">
+{% if performances %}
 	<ul>
-		<li>
-			<kbd>Ctrl</kbd> + <kbd>Enter</kbd> - Start Performance
-		</li>
-
-		<li>
-			<kbd>Ctrl</kbd> + <kbd>Space</kbd> - Toggle Microphone Listen
-		</li>
-</div>
+		{% for performance in performances %}
+			<li>
+				<a href="{% url 'performance' performance.id %}">
+					{{ performance.title|yesno:"(Untitled)" }}
+				</a>
+			</li>
+		{% endfor %}
+	</ul>
+{% else %}
+	<p>No performances yet.</p>
+{% endif %}
 {% endblock %}

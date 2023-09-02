@@ -2,11 +2,17 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from .performance_service import PerformanceService
+from .models import Performance as PerformanceModel
 
 service = PerformanceService()
 
 def index(request):
-    return render(request, "perform/index.html")
+    return render(request, "perform/index.html", {
+        "performances": PerformanceModel.objects.all()
+    })
+
+def performance(request, performance_id):
+    return render(request, "perform/performance.html")
 
 def add_character(request):
     return render(request, "perform/_add_character.html")
@@ -15,13 +21,14 @@ def delete_character(request, character_id):
     # Return empty 200
     return HttpResponse()
 
-def start_performance(request):
-    print("Starting performance")
-
-    #@REVISIT is passing request.POST a good idea?
-    service.start(request.POST)
-
-    return get_performance_status(request)
+def create_performance(request):
+    # If GET request
+    if request.method == "GET":
+        return render(request, "perform/new_performance.html")
+    elif request.method == "POST":
+        #@REVISIT is passing request.POST a good idea?
+        service.start_new(request.POST)
+        return get_performance_status(request)
 
 def get_performance_status(request):
     print("Getting performance status")

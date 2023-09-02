@@ -11,7 +11,8 @@ class PerformanceService(Service):
         super().__init__('PerformanceService')
         self.performance = None
 
-    def start(self, POST):
+    #@REVISIT naming
+    def start_new(self, POST):
         # Create a Performance
         model_config = {
             "model": "gpt2-large"
@@ -28,13 +29,13 @@ class PerformanceService(Service):
         performance = Performance(model_config = model_config,
                                   resume_from_log = False)
 
-        for character_name, character_desc in zip(character_names, character_descs):
+        for char_name, char_desc in zip(character_names, character_descs):
             character = BotPerformer(
-                character_name=character_name,
-                character_desc=character_desc,
+                character_name=char_name,
+                character_desc=char_desc,
             )
 
-            print(f"Adding character {character_name} with description {character_desc}")
+            print(f"Adding character {char_name} with description {char_desc}")
 
             performance.add_performer(character)
 
@@ -80,7 +81,7 @@ class PerformanceService(Service):
         performance_model.characters.set(characters)
         performance_model.save()
 
-        super().start()
+        super().start_new()
 
     def run(self):
         assert self.performance is not None

@@ -1,7 +1,7 @@
 from django.db import models
 
 class Performance(models.Model):
-    # name = models.TextField()
+    title = models.TextField(null=True, blank=True)
     # description = models.TextField()
     characters = models.ManyToManyField("Character")
     script = models.TextField()
