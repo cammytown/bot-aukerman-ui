@@ -8,7 +8,7 @@ class Service:
     def __init__(self, name):
         self.name = name
 
-    def start_new(self):
+    def start(self):
         """
         Start service.
         """

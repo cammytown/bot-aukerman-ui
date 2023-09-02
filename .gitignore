@@ -3,3 +3,7 @@ __pycache__
 *.egg-info/
 archive/
 *.sqlite3
+
+*.css
+*.css.map
+.sass-cache/

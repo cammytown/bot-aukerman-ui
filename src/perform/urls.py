@@ -21,7 +21,17 @@ urlpatterns = [
          views.create_performance,
          name="create_performance"),
 
-    # path("stop_performance", views.stop_performance, name="stop_performance"),
+    path("start_performance/<int:performance_id>",
+            views.start_performance,
+            name="start_performance"),
+
+    path("stop_performance/<int:performance_id>",
+         views.stop_performance,
+         name="stop_performance"),
+
+    path("generate_dialogue/<int:performance_id>",
+            views.generate_dialogue,
+            name="generate_dialogue"),
 
     path("get_performance_status",
          views.get_performance_status,

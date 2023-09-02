@@ -14,7 +14,11 @@
 		{% for performance in performances %}
 			<li>
 				<a href="{% url 'performance' performance.id %}">
-					{{ performance.title|yesno:"(Untitled)" }}
+					{% if performance.title %}
+						{{ performance.title }}
+					{% else %}
+						{{ performance.id }} (Untitled)
+					{% endif %}
 				</a>
 			</li>
 		{% endfor %}

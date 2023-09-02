@@ -49,36 +49,22 @@
 	</fieldset>
 
 	<fieldset>
-		<legend>Starting Context</legend>
+		<legend>Starting Script</legend>
 
 		<textarea
 			class="form-control"
 			id="context"
-			name="context"
+			name="context_script"
 			rows="5"
 			placeholder="FROG: Well, hello there, mister human.
 HOMELESS MAN: A— a talking frog?"></textarea>
 	</fieldset>
 
 	<fieldset>
-		<button type="submit" class="btn btn-primary" id="start-performance">
-			Start Performance
+		<button type="submit" class="btn btn-primary" id="create-performance">
+			Create Performance
 		</button>
-
-		<a
-			class="btn btn-primary"
-			id="toggle-microphone"
-			hx-post="{% url 'toggle_microphone' %}"
-			hx-target="#microphone-status"
-			hx-swap="innerHTML"
-		>
-			Toggle Microphone Listen
-		</a>
-		<span id="microphone-status">Off</span>
 	</fieldset>
 </form>
-
-<div id="performance">
-</div>
 
 {% endblock %}

@@ -1,7 +1,3 @@
-body {
-	background-color: #e2e2fd;
-}
-
 /*.form-group.row {       */
 /*    display: flex;      */
 /*}                       */
@@ -24,35 +20,27 @@ input, textarea {
 	background-color: #eaedfe;
 }
 
-#content {
-	width: 100%;
-	max-width: 800px;
-	height: 100%;
-	margin: 0 auto;
-	padding: 0;
-	box-sizing: border-box;
-	border: 0;
-}
-
 fieldset {
 	/*border: 0;*/
 	background-color: #b6b7db;
+
+	&.characters {
+		padding: 10px 0;
+	}
+
+	legend {
+		margin-left: 10px;
+	}
 }
 
-fieldset.characters {
-	padding: 10px 0;
-}
+.characters {
+	.character {
+		padding: 10px;
+		/*margin-bottom: 20px;*/
+		/*background-color: #fafafa;*/
+	}
 
-fieldset legend {
-	margin-left: 10px;
-}
-
-.characters .character {
-	padding: 10px;
-	/*margin-bottom: 20px;*/
-	/*background-color: #fafafa;*/
-}
-
-.characters .character:nth-child(even) {
-	background-color: #9da0ca;
+	.character:nth-child(even) {
+		background-color: #9da0ca;
+	}
 }

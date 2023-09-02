@@ -15,8 +15,11 @@
 
 	<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 		<nav id="main-menu">
+			<a id="logo" href="{% url 'index' %}">Bot Aukerman</a>
+
 			<ul>
-				<li><a href="{% url 'index' %}">Home</a></li>
+				<li><a href="{% url 'create_performance' %}">New Performance</a></li>
+				<li><a href="{% url 'index' %}">Performances</a></li>
 			</ul>
 		</nav>
 

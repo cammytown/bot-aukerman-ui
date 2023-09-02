@@ -1,0 +1,38 @@
+nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+	background-color: $purp-nav;
+
+	a {
+		//padding: 10px;
+		margin: 0 10px;
+		text-decoration: none;
+		color: $nav-text;
+
+		&:hover {
+			color: $white;
+		}
+
+		&#logo {
+			font-size: 2em;
+		}
+	}
+
+	ul {
+		li {
+			display: inline-block;
+			//padding: 10px;
+			//margin: 0 10px;
+			//background-color: $purp-button;
+			//border-radius: 5px;
+			list-style-type: none;
+
+			a {
+				&:hover {
+				}
+			}
+		}
+	}
+}
