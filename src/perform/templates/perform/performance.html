@@ -7,56 +7,23 @@
 {% block content %}
 	<h2>{{ performance.title }}</h2>
 
-	<div id="performance-controls">
-		<button
-			id="start-performance"
-			hx-post="{% url 'start_performance' performance.id %}"
-			hx-target="#performance-script-text"
-		>
-			Start Performance
-		</button>
+	{% include "perform/_performance_controls.html" %}
 
-		<button
-			id="stop-performance"
-			hx-post="{% url 'stop_performance' performance.id %}"
-		>
-			Stop Performance
-		</button>
+	{% comment %}<div id="performance-status">         {% endcomment %}
+	{% comment %}    <h3>Performance Status</h3>       {% endcomment %}
 
-		<button
-			id="generate-dialogue"
-			hx-post="{% url 'generate_dialogue' performance.id %}"
-		>
-			Generate Dialogue
-		</button>
-	</div>
+	{% comment %}    <div id="performance-status-text">{% endcomment %}
+	{% comment %}        {{ performance_status_text }} {% endcomment %}
+	{% comment %}    </div>                            {% endcomment %}
+	{% comment %}</div>                                {% endcomment %}
 
-	<div id="performance-status">
-		<h3>Performance Status</h3>
+	{% comment %}<div id="performance-logs">           {% endcomment %}
+	{% comment %}    <h3>Performance Logs</h3>         {% endcomment %}
 
-		<a
-			class="btn btn-primary"
-			id="toggle-microphone"
-			hx-post="{% url 'toggle_microphone' %}"
-			hx-target="#microphone-status"
-			hx-swap="innerHTML"
-		>
-			Toggle Microphone Listen
-		</a>
-		<span id="microphone-status">Off</span>
-
-		<div id="performance-status-text">
-			{{ performance_status_text }}
-		</div>
-	</div>
-
-	<div id="performance-logs">
-		<h3>Performance Logs</h3>
-
-		<div id="performance-logs-text">
-			{{ performance_logs_text }}
-		</div>
-	</div>
+	{% comment %}    <div id="performance-logs-text">  {% endcomment %}
+	{% comment %}        {{ performance_logs_text }}   {% endcomment %}
+	{% comment %}    </div>                            {% endcomment %}
+	{% comment %}</div>                                {% endcomment %}
 
 	<div id="performance-script">
 		<h3>Performance Script</h3>

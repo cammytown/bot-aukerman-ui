@@ -24,9 +24,9 @@ fieldset {
 	/*border: 0;*/
 	background-color: #b6b7db;
 
-	&.characters {
-		padding: 10px 0;
-	}
+	//&.characters {
+	//    padding: 10px 0;
+	//}
 
 	legend {
 		margin-left: 10px;
@@ -36,7 +36,8 @@ fieldset {
 .characters {
 	.character {
 		padding: 10px;
-		/*margin-bottom: 20px;*/
+		//margin: 10px 0;
+		margin-bottom: 8px;
 		/*background-color: #fafafa;*/
 	}
 

@@ -15,7 +15,8 @@ def index(request):
 
 def performance(request, performance_id):
     return render(request, "perform/performance.html", {
-        "performance": PerformanceModel.objects.get(id=performance_id)
+        "performance": PerformanceModel.objects.get(id=performance_id),
+        "service": service, #@REVISIT
     })
 
 def add_character(request):
@@ -70,9 +71,9 @@ def start_performance(request, performance_id):
 
     service.start(performance_model)
 
-    return render(request, "perform/_performance_status.html", {
-        "script": performance_model.script,
-        # "characters": performance_model.characters.all(),
+    return render(request, "perform/_performance_controls.html", {
+        "performance": performance_model,
+        "service": service, #@REVISIT
     })
 
 def stop_performance(request, performance_id):
@@ -80,7 +81,11 @@ def stop_performance(request, performance_id):
 
     service.stop()
 
-    return HttpResponse()
+    return render(request, "perform/_performance_controls.html", {
+        #@REVISIT hack
+        "performance": PerformanceModel.objects.get(id=performance_id),
+        "service": service, #@REVISIT
+    })
 
 #@REVISIT rename to something like request_dialogue ?
 def generate_dialogue(request, performance_id):
@@ -88,7 +93,11 @@ def generate_dialogue(request, performance_id):
 
     service.generate_dialogue()
 
-    return HttpResponse()
+    return render(request, "perform/_performance_controls.html", {
+        #@REVISIT hack
+        "performance": PerformanceModel.objects.get(id=performance_id),
+        "service": service, #@REVISIT
+    })
 
 def get_performance_status(request):
     print("Getting performance status")

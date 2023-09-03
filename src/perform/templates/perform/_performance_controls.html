@@ -1,0 +1,48 @@
+<div
+	id="performance-controls"
+	hx-swap="outerHTML"
+	hx-target="this"
+	hx-indicator=".htmx-indicator"
+>
+	<div class="htmx-indicator">
+		<div class="htmx-indicator-content">
+			<div class="htmx-spinner">Loading</div>
+		</div>
+	</div>
+
+{% if service.running %}
+	<button
+		id="stop-performance"
+		hx-post="{% url 'stop_performance' performance.id %}"
+	>
+		Stop Performance
+	</button>
+
+	<button
+		id="generate-dialogue"
+		hx-post="{% url 'generate_dialogue' performance.id %}"
+	>
+		Generate Dialogue
+	</button>
+
+	<button
+		id="toggle-microphone"
+		hx-post="{% url 'toggle_microphone' %}"
+		hx-target="#microphone-status"
+		hx-swap="innerHTML"
+	>
+		Toggle Microphone Listen
+	</button>
+
+	<span id="microphone-status">
+		{{ service.performance.is_listening|yesno:"On,Off" }}
+	</span>
+{% else %}
+	<button
+		id="start-performance"
+		hx-post="{% url 'start_performance' performance.id %}"
+	>
+		Start Performance
+	</button>
+{% endif %}
+</div>

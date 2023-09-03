@@ -15,14 +15,19 @@ class PerformanceService(Service):
         super().__init__('PerformanceService')
         self.performance = None
 
-    #@REVISIT naming
     def start(self, performance_model: PerformanceModel):
         if self.running == True:
-            raise Exception("PerformanceService is already running")
+            return
+
+        #@REVISIT weird architecture
+        self.performance_model = performance_model
 
         # Create a Performance
         model_config = {
-            "model": "gpt2-large"
+            "model": "gpt2-large",
+            "use_cuda": True, #@REVISIT!
+            "max_context_length": 200, #@REVISIT!
+
             # "model": "gpt2"
             # "model": "gpt4all-7B-unfiltered", "engine": "llamacpp"
             # "model": "text-ada-001", "engine": "openai",
@@ -33,7 +38,7 @@ class PerformanceService(Service):
                                   resume_from_log = False)
 
         # Add characters
-        for character in performance_model.characters.all():
+        for character in self.performance_model.characters.all():
             character = BotPerformer(
                 character_name=character.name,
                 character_desc=character.description,
@@ -51,22 +56,22 @@ class PerformanceService(Service):
         # print(f"Adding context {context}")
         # performance.add_dialogue(context)
 
-        performance.load_script_string(performance_model.script)
+        performance.load_script_string(self.performance_model.script)
 
         # Add a human performer
         human = HumanPerformer(character_name="Cammy")
         performance.add_performer(human)
 
         self.performance = performance
-        self.performance_model = performance_model
+
+        # assert self.performance is not None
+        # assert self.performance_model is not None
+
+        self.performance.start_audio()
 
         super().start()
 
     def run(self):
-        assert self.performance is not None
-        assert self.performance_model is not None
-
-        self.performance.start_audio()
 
         while self.running:
             components = self.performance.update_audio()
@@ -82,7 +87,7 @@ class PerformanceService(Service):
             # Sleep briefly
             time.sleep(0.1)
 
-        self.performance.stop_audio()
+        # self.performance.stop_audio()
 
     def generate_dialogue(self) -> list:
         # Generate dialogue for bot characters

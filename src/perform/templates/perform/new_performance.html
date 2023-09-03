@@ -23,7 +23,7 @@
 			class="form-control"
 			id="performance_title"
 			name="performance_title"
-			placeholder="The Odd Frog"
+			placeholder="Dumb Ass"
 		/>
 	</fieldset>
 
@@ -37,10 +37,10 @@
 			id="scene_description"
 			name="scene_description"
 			rows="3"
-			placeholder="A lovely park on a sunny day."></textarea>
+			placeholder="A magic donkey and a man sit in the middle of a hot desert."></textarea>
 	</fieldset>
 
-	<fieldset class="characters">
+	<fieldset>
 		<legend>Characters</legend>
 
 		<div class="characters">
@@ -51,16 +51,23 @@
 	<fieldset>
 		<legend>Starting Script</legend>
 
+		<label>
+			Providing an initial context script usually improves the output of
+			most chatbots / <abbr>LLMs</abbr> (large-language models).
+		</label>
+
 		<textarea
 			class="form-control"
 			id="context"
 			name="context_script"
 			rows="5"
-			placeholder="FROG: Well, hello there, mister human.
-HOMELESS MAN: A— a talking frog?"></textarea>
+			placeholder="MAN: Well. This sucks.
+MAGIC DONKEY: A— a talking frog?"></textarea>
 	</fieldset>
 
 	<fieldset>
+		<legend>Create</legend>
+
 		<button type="submit" class="btn btn-primary" id="create-performance">
 			Create Performance
 		</button>
