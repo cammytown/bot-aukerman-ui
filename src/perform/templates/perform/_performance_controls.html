@@ -6,7 +6,7 @@
 >
 	<div class="htmx-indicator">
 		<div class="htmx-indicator-content">
-			<div class="htmx-spinner">Loading</div>
+			<div class="htmx-spinner">Loading…</div>
 		</div>
 	</div>
 
@@ -21,8 +21,16 @@
 	<button
 		id="generate-dialogue"
 		hx-post="{% url 'generate_dialogue' performance.id %}"
+		hx-target="#performance-script-text"
 	>
 		Generate Dialogue
+	</button>
+
+	<button
+		id="toggle-microphone"
+		hx-post="{% url 'toggle_microphone' %}"
+	>
+		Interrupt
 	</button>
 
 	<button
@@ -33,7 +41,6 @@
 	>
 		Toggle Microphone Listen
 	</button>
-
 	<span id="microphone-status">
 		{{ service.performance.is_listening|yesno:"On,Off" }}
 	</span>

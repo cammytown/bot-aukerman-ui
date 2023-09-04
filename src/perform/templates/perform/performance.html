@@ -5,32 +5,67 @@
 {% block content_class %}performance{% endblock %}
 
 {% block content %}
-	<h2>{{ performance.title }}</h2>
+<h2>{{ performance.title }}</h2>
 
-	{% include "perform/_performance_controls.html" %}
+<h3>{{ performance.scenes.last.description }}</h3>
 
-	{% comment %}<div id="performance-status">         {% endcomment %}
-	{% comment %}    <h3>Performance Status</h3>       {% endcomment %}
+<div id="performance-characters">
+	<h3>Characters</h3>
 
-	{% comment %}    <div id="performance-status-text">{% endcomment %}
-	{% comment %}        {{ performance_status_text }} {% endcomment %}
-	{% comment %}    </div>                            {% endcomment %}
-	{% comment %}</div>                                {% endcomment %}
+	{% for character in performance.characters.all %}
+		<div class="character">
+			<h4>{{ character.name }}</h4>
 
-	{% comment %}<div id="performance-logs">           {% endcomment %}
-	{% comment %}    <h3>Performance Logs</h3>         {% endcomment %}
-
-	{% comment %}    <div id="performance-logs-text">  {% endcomment %}
-	{% comment %}        {{ performance_logs_text }}   {% endcomment %}
-	{% comment %}    </div>                            {% endcomment %}
-	{% comment %}</div>                                {% endcomment %}
-
-	<div id="performance-script">
-		<h3>Performance Script</h3>
-
-		<div id="performance-script-text">
-			{{ performance.script|linebreaksbr }}
+			{% if character.description %}
+				<p>{{ character.description }}</p>
+			{% endif %}
 		</div>
+	{% endfor %}
+
+{% include "perform/_performance_controls.html" %}
+
+{% comment %}<div id="performance-status">         {% endcomment %}
+{% comment %}    <h3>Performance Status</h3>       {% endcomment %}
+
+{% comment %}    <div id="performance-status-text">{% endcomment %}
+{% comment %}        {{ performance_status_text }} {% endcomment %}
+{% comment %}    </div>                            {% endcomment %}
+{% comment %}</div>                                {% endcomment %}
+
+{% comment %}<div id="performance-logs">           {% endcomment %}
+{% comment %}    <h3>Performance Logs</h3>         {% endcomment %}
+
+{% comment %}    <div id="performance-logs-text">  {% endcomment %}
+{% comment %}        {{ performance_logs_text }}   {% endcomment %}
+{% comment %}    </div>                            {% endcomment %}
+{% comment %}</div>                                {% endcomment %}
+
+<div id="performance-script">
+	<h3>Performance Script</h3>
+
+	<form
+		id="edit-script-form"
+		hx-post="{% url 'edit_script' performance.id %}"
+		hx-target="#performance-script-text"
+		hx-swap="outerHTML"
+	>
+		<button id="edit-script" type="button">
+			Edit Script
+		</button>
+
+		<button id="save-script" type="button" style="display: none;">
+			Save Script
+		</button>
+
+		<input
+			type="hidden"
+			name="script_text"
+			id="script-text-input"
+			value="{{ performance.script }}" />
+	</form>
+
+	{% include "perform/_performance_script.html" %}
+</div>
 {% endblock %}
 
 <div id="hotkeys">
@@ -42,4 +77,5 @@
 		<li>
 			<kbd>Ctrl</kbd> + <kbd>Space</kbd> - Toggle Microphone Listen
 		</li>
+	</ul>
 </div>

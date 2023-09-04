@@ -72,7 +72,6 @@ class PerformanceService(Service):
         super().start()
 
     def run(self):
-
         while self.running:
             components = self.performance.update_audio()
 
@@ -88,6 +87,25 @@ class PerformanceService(Service):
             time.sleep(0.1)
 
         # self.performance.stop_audio()
+
+    def load_script_string(self, script_str: str):
+        assert self.performance is not None
+
+        # Load script into performance
+        #@TODO this will reset the context of all chatbots. If the script is 
+        # edited at a point in the script that precedes the maximum context
+        # of the chatbots, there is no reason to reset their context. Whether
+        # this is handled here and/or performance and/or llmber is TBD.
+        self.performance.load_script_string(script_str)
+
+        # Get interpreted script
+        script = self.performance.get_script()
+
+        # Update database
+        self.performance_model.script = script
+        self.performance_model.save()
+
+        return script
 
     def generate_dialogue(self) -> list:
         # Generate dialogue for bot characters
@@ -114,7 +132,6 @@ class PerformanceService(Service):
         # self.performance_model.script += new_dialogue
 
         self.performance_model.script = self.performance.get_script()
-
         self.performance_model.save()
 
         print(f"New dialogue: {new_dialogue}")

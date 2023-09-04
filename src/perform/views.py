@@ -4,7 +4,8 @@ from django.http import HttpResponse
 from .performance_service import PerformanceService
 from .models import \
         Performance as PerformanceModel,\
-        Character
+        Character,\
+        Scene
 
 service = PerformanceService()
 
@@ -29,10 +30,12 @@ def delete_character(request, character_id):
 def create_performance(request):
     # If GET request
     if request.method == "GET":
-        return render(request, "perform/new_performance.html")
+        return render(request, "perform/create_performance.html")
 
     elif request.method == "POST":
         POST = request.POST
+
+        scene_desc = POST.get("scene_description")
 
         # For each character, create a BotPerformer
         character_names = POST.getlist("character_names[]")
@@ -48,6 +51,10 @@ def create_performance(request):
             character_model.save()
             characters.append(character_model)
 
+        # Create Scene database entry
+        scene = Scene(description=scene_desc)
+        scene.save()
+
         # Add Performance to database
         performance_model = PerformanceModel(
             title=POST.get("performance_title"),
@@ -56,10 +63,16 @@ def create_performance(request):
             #@ bot_aukerman.performance as we do in the service
             script=POST.get("context_script"),
         )
+
+        # Save (give Performance an id)
         performance_model.save()
+
+        # Add Scene to Performance
+        performance_model.scenes.add(scene)
 
         # Add Characters to Performance
         performance_model.characters.set(characters)
+
         performance_model.save()
 
         return HttpResponse(performance_model.id)
@@ -87,16 +100,38 @@ def stop_performance(request, performance_id):
         "service": service, #@REVISIT
     })
 
+def edit_script(request, performance_id):
+    print("Editing script")
+
+    if(request.method == "POST"):
+        script_text = request.POST.get("script_text")
+
+        # If service is not running
+        if not service.running:
+            # Update database
+            performance_model = PerformanceModel.objects.get(id=performance_id)
+            performance_model.script = script_text
+            performance_model.save()
+
+        # If service is running
+        else:
+            # Update script in service
+            script = service.load_script_string(script_text)
+
+        return render(request, "perform/_performance_script.html", {
+            #@REVISIT hack (service might update it)
+            "performance": PerformanceModel.objects.get(id=performance_id),
+        })
+
 #@REVISIT rename to something like request_dialogue ?
 def generate_dialogue(request, performance_id):
     print("Generating dialogue")
 
-    service.generate_dialogue()
+    bot_dialogue = service.generate_dialogue()
 
-    return render(request, "perform/_performance_controls.html", {
+    return render(request, "perform/_performance_script.html", {
         #@REVISIT hack
         "performance": PerformanceModel.objects.get(id=performance_id),
-        "service": service, #@REVISIT
     })
 
 def get_performance_status(request):
