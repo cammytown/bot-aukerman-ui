@@ -7,3 +7,6 @@ archive/
 *.css
 *.css.map
 .sass-cache/
+
+#@REVISIT
+*.wav

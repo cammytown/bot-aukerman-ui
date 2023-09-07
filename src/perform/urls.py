@@ -37,6 +37,10 @@ urlpatterns = [
             views.generate_dialogue,
             name="generate_dialogue"),
 
+    path("interrupt/<int:performance_id>",
+            views.interrupt,
+            name="interrupt"),
+
     path("get_performance_status",
          views.get_performance_status,
          name="get_performance_status"),

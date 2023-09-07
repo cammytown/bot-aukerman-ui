@@ -8,6 +8,7 @@
 
 		<link rel="stylesheet" href="{% static 'perform/perform.css' %}">
 		<script src="{% static 'perform/htmx.min.js' %}"></script>
+		<script src="{% static 'perform/_hyperscript.min.js' %}"></script>
 		<script src="{% static 'perform/bot-aukerman-ui.js' %}"></script>
 
 		{% block head %}{% endblock %}
@@ -22,6 +23,8 @@
 				<li><a href="{% url 'index' %}">Performances</a></li>
 			</ul>
 		</nav>
+
+		{% block content_header %}{% endblock %}
 
 		<div id="content" class="{% block content_class %}{% endblock %}">
 			{% block content %}{% endblock %}

@@ -4,12 +4,6 @@
 	hx-target="this"
 	hx-indicator=".htmx-indicator"
 >
-	<div class="htmx-indicator">
-		<div class="htmx-indicator-content">
-			<div class="htmx-spinner">Loading…</div>
-		</div>
-	</div>
-
 {% if service.running %}
 	<button
 		id="stop-performance"
@@ -18,17 +12,39 @@
 		Stop Performance
 	</button>
 
+	<form
+		id="edit-script-form"
+		hx-post="{% url 'edit_script' performance.id %}"
+		hx-target="#performance-script-text"
+		hx-swap="outerHTML"
+	>
+		<button id="edit-script" type="button">
+			Edit Script
+		</button>
+
+		<button id="save-script" type="button" style="display: none;">
+			Save Script
+		</button>
+
+		<input
+			type="hidden"
+			name="script_text"
+			id="script-text-input"
+			value="{{ performance.script }}" />
+	</form>
+
 	<button
 		id="generate-dialogue"
 		hx-post="{% url 'generate_dialogue' performance.id %}"
 		hx-target="#performance-script-text"
+		hx-swap="outerHTML show:window:bottom"
 	>
 		Generate Dialogue
 	</button>
 
 	<button
 		id="toggle-microphone"
-		hx-post="{% url 'toggle_microphone' %}"
+		hx-post="{% url 'interrupt' performance.id %}"
 	>
 		Interrupt
 	</button>
@@ -52,4 +68,10 @@
 		Start Performance
 	</button>
 {% endif %}
+
+	<div class="htmx-indicator">
+		<div class="htmx-indicator-content">
+			<div class="htmx-spinner">Loading…</div>
+		</div>
+	</div>
 </div>

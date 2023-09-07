@@ -4,25 +4,39 @@
 
 {% block content_class %}performance{% endblock %}
 
-{% block content %}
-<h2>{{ performance.title }}</h2>
+{% block content_header %}
+<header id="performance-header">
+	<h2>{{ performance.title }}</h2>
 
-<h3>{{ performance.scenes.last.description }}</h3>
+	<p>
+		<em>{{ performance.scenes.last.description }}</em>
+	</p>
+
+	{% include "perform/_performance_controls.html" %}
+
+</header>
+{% endblock %}
+
+{% block content %}
+
 
 <div id="performance-characters">
-	<h3>Characters</h3>
+	<h3 _="on click toggle .hidden on #character-list">
+		Characters
+	</h3>
 
+	<div id="character-list" class="characters">
 	{% for character in performance.characters.all %}
 		<div class="character">
 			<h4>{{ character.name }}</h4>
 
 			{% if character.description %}
-				<p>{{ character.description }}</p>
+				{{ character.description }}
 			{% endif %}
 		</div>
 	{% endfor %}
-
-{% include "perform/_performance_controls.html" %}
+	</div>
+</div>
 
 {% comment %}<div id="performance-status">         {% endcomment %}
 {% comment %}    <h3>Performance Status</h3>       {% endcomment %}
@@ -42,27 +56,6 @@
 
 <div id="performance-script">
 	<h3>Performance Script</h3>
-
-	<form
-		id="edit-script-form"
-		hx-post="{% url 'edit_script' performance.id %}"
-		hx-target="#performance-script-text"
-		hx-swap="outerHTML"
-	>
-		<button id="edit-script" type="button">
-			Edit Script
-		</button>
-
-		<button id="save-script" type="button" style="display: none;">
-			Save Script
-		</button>
-
-		<input
-			type="hidden"
-			name="script_text"
-			id="script-text-input"
-			value="{{ performance.script }}" />
-	</form>
 
 	{% include "perform/_performance_script.html" %}
 </div>

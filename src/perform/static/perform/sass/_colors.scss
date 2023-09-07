@@ -1,6 +1,14 @@
 $white: #fdfdfd;
 $purp-bg: #e2e2fd;
-$purp-bg-alt: #9da0ca;
-$purp-button: #b6b7db;
-$purp-nav: #201e37;
-$nav-text: #a8a8d1;
+$purp-bg-alt: #c1c1dd;
+//$purp-bg-alt: #9da0ca;
+
+// Header
+$header-bg: #201e37;
+$header-text: #a8a8d1;
+
+// Buttons
+$button-text: $purp-bg; //#d6d3ea; //#9a9bd0;
+$button-text-alt: $purp-bg-alt;
+$button-bg: #312e55; //#121d37;
+$button-bg-alt: #121d37;

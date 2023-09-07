@@ -111,14 +111,18 @@ class PerformanceService(Service):
         # Generate dialogue for bot characters
         bot_dialogue = self.performance.generate_dialogue(1)
 
-        # Perform dialogue
-        self.performance.perform_components(bot_dialogue)
-
         # Add dialogue to database
         self.add_components(bot_dialogue)
 
+        # Perform dialogue
+        self.performance.perform_components(bot_dialogue)
+
         return bot_dialogue
 
+    def interrupt(self):
+        self.performance.interrupt()
+
+    #@REVISIT architecture; scaffolding
     def add_components(self, components: list):
         new_dialogue: str = ""
 

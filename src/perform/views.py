@@ -134,6 +134,17 @@ def generate_dialogue(request, performance_id):
         "performance": PerformanceModel.objects.get(id=performance_id),
     })
 
+def interrupt(request, performance_id):
+    print("Interrupting")
+
+    service.interrupt()
+
+    return render(request, "perform/_performance_controls.html", {
+        #@REVISIT hack
+        "performance": PerformanceModel.objects.get(id=performance_id),
+        "service": service, #@REVISIT
+    })
+
 def get_performance_status(request):
     print("Getting performance status")
 

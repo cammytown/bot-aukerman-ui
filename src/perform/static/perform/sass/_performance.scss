@@ -1,3 +1,39 @@
-#performance-script-text.editing {
+header#performance-header {
+	position: sticky; //@REVISIT browser support?
+	top: 0px;
+	padding: 15px;
+	//background-color: $purp-bg;
 	background-color: $purp-bg-alt;
+}
+
+//#performance-controls {
+//    position: sticky; //@REVISIT browser support?
+//    top: 0px;
+//    padding: 15px;
+//    background-color: $purp-bg;
+//}
+
+form#edit-script-form {
+	display: inline-block;
+}
+
+#performance-script-text {
+	padding: 15px;
+
+	&.editing {
+		background-color: $purp-bg-alt;
+	}
+}
+
+.characters {
+	.character {
+		padding: 10px;
+		//margin: 10px 0;
+		margin-bottom: 8px;
+		/*background-color: #fafafa;*/
+	}
+
+	.character:nth-child(even) {
+		background-color: $purp-bg-alt;
+	}
 }
