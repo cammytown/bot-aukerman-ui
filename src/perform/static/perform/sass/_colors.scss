@@ -1,7 +1,7 @@
 $white: #fdfdfd;
 $purp-bg: #e2e2fd;
 $purp-bg-alt: #c1c1dd;
-//$purp-bg-alt: #9da0ca;
+$purp-bg-alt2: #afb1d0;
 
 // Header
 $header-bg: #201e37;
@@ -12,3 +12,9 @@ $button-text: $purp-bg; //#d6d3ea; //#9a9bd0;
 $button-text-alt: $purp-bg-alt;
 $button-bg: #312e55; //#121d37;
 $button-bg-alt: #121d37;
+
+$button-text-danger: $white;
+$button-bg-danger: #622b32;
+
+$button-text-green: $white;
+$button-bg-green: #3d6044;

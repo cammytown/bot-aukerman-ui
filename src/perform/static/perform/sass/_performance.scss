@@ -33,7 +33,11 @@ form#edit-script-form {
 		/*background-color: #fafafa;*/
 	}
 
-	.character:nth-child(even) {
-		background-color: $purp-bg-alt;
-	}
+	//.character:nth-child(even) {
+	//    background-color: $purp-bg-alt;
+	//}
+}
+
+.htmx-indicator {
+	position: absolute;
 }

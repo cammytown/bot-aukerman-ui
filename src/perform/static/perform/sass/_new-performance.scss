@@ -1,0 +1,21 @@
+form.new-performance {
+	.characters {
+		.character {
+			padding: 10px;
+			//margin: 10px 0;
+			margin-bottom: 8px;
+			/*background-color: #fafafa;*/
+
+			&:nth-child(even) {
+				background-color: $purp-bg-alt2;
+				//background-color: $header-bg;
+				//color: $header-text;
+			}
+
+			.delete-character {
+				float: right;
+				margin-right: 10px;
+			}
+		}
+	}
+}

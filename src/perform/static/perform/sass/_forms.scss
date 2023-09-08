@@ -22,7 +22,8 @@ input, textarea {
 
 fieldset {
 	/*border: 0;*/
-	background-color: #b6b7db;
+	//background-color: #b6b7db;
+	background-color: $purp-bg-alt;
 
 	//&.characters {
 	//    padding: 10px 0;
@@ -30,18 +31,5 @@ fieldset {
 
 	legend {
 		margin-left: 10px;
-	}
-}
-
-.characters {
-	.character {
-		padding: 10px;
-		//margin: 10px 0;
-		margin-bottom: 8px;
-		/*background-color: #fafafa;*/
-	}
-
-	.character:nth-child(even) {
-		background-color: $purp-bg-alt;
 	}
 }

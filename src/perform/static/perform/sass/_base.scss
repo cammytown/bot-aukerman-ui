@@ -11,12 +11,20 @@ h1, h2, h3, h4, h5, h6 {
 	display: none;
 }
 
-#content {
+.text-right {
+	text-align: right;
+}
+
+.float-right {
+	float: right;
+}
+
+#content, .container {
 	width: 100%;
 	max-width: 800px;
 	height: 100%;
 	margin: 0 auto;
-	padding: 0;
+	padding: 15px 0;
 	box-sizing: border-box;
 	border: 0;
 }

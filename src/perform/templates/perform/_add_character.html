@@ -21,19 +21,25 @@
 			placeholder="A magical donkey capable of unfathomable power."></textarea>
 	</div>
 
-	<a
-		hx-delete="{% url 'delete_character' 1 %}"
-		hx-target="closest .character"
-		hx-swap="outerHTML"
-	>
-		Delete Character
-	</a>
+	<div class="text-right">
+		<a
+			hx-delete="{% url 'delete_character' 1 %}"
+			hx-target="closest .character"
+			hx-swap="outerHTML"
+			class="btn btn-danger btn-small"
+		>
+			Delete Character
+		</a>
+	</div>
 </div>
 
-<button
-	hx-post="{% url 'add_character' %}"
-	hx-target="this"
-	hx-swap="outerHTML"
->
-	Add Character
-</button>
+<div class="text-right">
+	<button
+		hx-post="{% url 'add_character' %}"
+		hx-target="closest .text-right"
+		hx-swap="outerHTML"
+		class="btn btn-add btn-small"
+	>
+		+ Add Character
+	</button>
+</div>
