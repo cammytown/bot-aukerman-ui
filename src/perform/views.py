@@ -9,13 +9,16 @@ from .models import \
 
 service = PerformanceService()
 
+
 def index(request):
     return render(request, "perform/index.html", {
+        "page": "index",
         "performances": PerformanceModel.objects.all()
     })
 
 def performance(request, performance_id):
     return render(request, "perform/performance.html", {
+        "page": "performance",
         "performance": PerformanceModel.objects.get(id=performance_id),
         "service": service, #@REVISIT
     })
@@ -30,7 +33,10 @@ def delete_character(request, character_id):
 def create_performance(request):
     # If GET request
     if request.method == "GET":
-        return render(request, "perform/create_performance.html")
+        return render(request, "perform/create_performance.html", {
+            "page": "create_performance",
+        })
+
 
     elif request.method == "POST":
         POST = request.POST
@@ -100,6 +106,13 @@ def stop_performance(request, performance_id):
         "service": service, #@REVISIT
     })
 
+#@REVISIT architecture
+def get_script(request, performance_id):
+    return render(request, "perform/_performance_script.html", {
+        #@REVISIT hack (service might update it)
+        "performance": PerformanceModel.objects.get(id=performance_id),
+    })
+
 def edit_script(request, performance_id):
     print("Editing script")
 
@@ -118,10 +131,7 @@ def edit_script(request, performance_id):
             # Update script in service
             script = service.load_script_string(script_text)
 
-        return render(request, "perform/_performance_script.html", {
-            #@REVISIT hack (service might update it)
-            "performance": PerformanceModel.objects.get(id=performance_id),
-        })
+    return get_script(request, performance_id)
 
 #@REVISIT rename to something like request_dialogue ?
 def generate_dialogue(request, performance_id):
@@ -129,10 +139,7 @@ def generate_dialogue(request, performance_id):
 
     bot_dialogue = service.generate_dialogue()
 
-    return render(request, "perform/_performance_script.html", {
-        #@REVISIT hack
-        "performance": PerformanceModel.objects.get(id=performance_id),
-    })
+    return get_script(request, performance_id)
 
 def interrupt(request, performance_id):
     print("Interrupting")

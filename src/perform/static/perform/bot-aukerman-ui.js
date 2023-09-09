@@ -1,5 +1,16 @@
+//@TODO this is mostly scaffolding
+
 window.addEventListener('load', function() {
 	// Add shortcut keys
+	addShortcutKeys();
+
+	// If on the performance page
+	if(document.body.dataset.page == 'performance') {
+		initPerformance();
+	}
+});
+
+function addShortcutKeys() {
 	document.addEventListener('keydown', function(e) {
 		// Ctrl + Enter
 		if (e.ctrlKey && e.keyCode == 13) {
@@ -13,82 +24,76 @@ window.addEventListener('load', function() {
 			document.getElementById('toggle-microphone').click();
 		}
 	});
+}
 
-	//document.body.addEventListener('htmx:beforeRequest', function(evt) {
-	//    // Get trigger element
-	//    let triggerEle = evt.detail.elt;
+function initPerformance() {
+	// Websocket
+	initPerformanceWebsocket();
+}
 
-	//    // If trigger element is save script button
-	//    if (triggerEle.id == 'save-script') {
-	//        // Get script text element
-	//        let scriptTextEle = document.getElementById('performance-script-text');
+function editScript() {
+	let scriptTextEle = document.getElementById('performance-script-text');
 
-	//        // Update hidden input
-	//        let hiddenInput = document.getElementById('script-text-input')
-	//        hiddenInput.value = scriptTextEle.innerText;
-	//    }
-	//});
+	// Enable editing
+	scriptTextEle.setAttribute('contenteditable', 'true');
 
-	// Buttons
-	// Edit script
-	document.getElementById('edit-script').addEventListener('click', function() {
-		let scriptTextEle = document.getElementById('performance-script-text');
+	// Add editing class
+	scriptTextEle.classList.add('editing');
 
-		// Check if the script is already being edited
-		//@TODO probably improve architecture
-		//if(scriptTextEle.getAttribute('contenteditable') == 'true') {
-		//    // Disable editing
-		//    scriptTextEle.setAttribute('contenteditable', 'false');
+	// Hide this button
+	document.getElementById('edit-script').style.display = 'none';
 
-		//    // Remove editing class
-		//    scriptTextEle.classList.remove('editing');
+	// Show save button
+	document.getElementById('save-script').style.display = 'inline-block';
 
-		//    // Change button text
-		//    this.innerHTML = 'Edit Script';
+	//// Change button text
+	//this.innerHTML = 'Save Script';
+	//}
+}
 
-		//    // Save script
-		//    document.getElementById('save-script').click();
+function saveScript() {
+	let scriptTextEle = document.getElementById('performance-script-text');
 
-		//} else {
-			// Enable editing
-			scriptTextEle.setAttribute('contenteditable', 'true');
+	// Hide this button
+	document.getElementById('save-script').style.display = 'none';
 
-			// Add editing class
-			scriptTextEle.classList.add('editing');
+	// Show edit button
+	document.getElementById('edit-script').style.display = 'inline-block';
 
-			// Hide this button
-			this.style.display = 'none';
+	// Update the script text input
+	document.getElementById('script-text-input').value = scriptTextEle.innerText;
 
-			// Show save button
-			document.getElementById('save-script').style.display = 'inline-block';
+	// Submit the form
+	//@REVISIT this is a hacky way to submit the form
+	htmx.trigger('#edit-script-form', 'submit');
+}
 
-			//// Change button text
-			//this.innerHTML = 'Save Script';
-		//}
-	});
+function initPerformanceWebsocket() {
+	// Get the performance id
+	let performanceId = document.body.dataset.performanceId;
 
-	document.getElementById('save-script').addEventListener('click', function() {
-		let scriptTextEle = document.getElementById('performance-script-text');
+	// Websocket
+	let url = `ws://${window.location.host}/ws/performances/`
+		+ `${performanceId}`;
 
-		// Hide this button
-		this.style.display = 'none';
+	let websocket = new WebSocket(url);
 
-		// Show edit button
-		document.getElementById('edit-script').style.display = 'inline-block';
+	websocket.onopen = function() {
+	};
 
-		// Update the script text input
-		document.getElementById('script-text-input').value = scriptTextEle.innerText;
+	websocket.onmessage = function(e) {
+		// Get updated script
+		//@TODO probably scaffolding
+		htmx.ajax(
+			'GET',
+			`/get_script/${performanceId}`,
+			{
+				target: '#performance-script-text',
+				swap: 'outerHTML show:window:bottom'
+			}
+		);
+	};
 
-		// Submit the form
-		//@REVISIT this is a hacky way to submit the form
-		htmx.trigger('#edit-script-form', 'submit');
-	});
-
-	//document.getElementById('performance-script-text')
-	//    .addEventListener('keydown', function() {
-	//        console.log('input');
-
-	//        // Update the script text input
-	//        document.getElementById('script-text-input').value = this.innerText;
-	//    });
-});
+	websocket.onclose = function() {
+	};
+}

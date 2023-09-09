@@ -29,6 +29,10 @@ urlpatterns = [
          views.stop_performance,
          name="stop_performance"),
 
+    path("get_script/<int:performance_id>",
+            views.get_script,
+            name="get_script"),
+
     path("edit_script/<int:performance_id>",
             views.edit_script,
             name="edit_script"),

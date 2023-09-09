@@ -1,8 +1,6 @@
 {% extends "perform/base.html" %}
-
 {% block title %}Performance{% endblock %}
-
-{% block content_class %}performance{% endblock %}
+{% block body_attributes %}data-performance-id="{{ performance.id }}"{% endblock %}
 
 {% block content_header %}
 <header id="performance-header">
@@ -19,8 +17,6 @@
 {% endblock %}
 
 {% block content %}
-
-
 <div id="performance-characters">
 	{% comment %}<h3 _="on click toggle .hidden on #character-list">{% endcomment %}
 	<h3>

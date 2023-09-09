@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'perform.apps.PerformConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -122,3 +123,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ASGI_APPLICATION = 'bot_aukerman_ui.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        #@REVISIT docs warn against using InMemoryChannelLayer in production
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}

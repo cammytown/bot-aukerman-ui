@@ -13,27 +13,6 @@
 		Stop Performance
 	</button>
 
-	<form
-		id="edit-script-form"
-		hx-post="{% url 'edit_script' performance.id %}"
-		hx-target="#performance-script-text"
-		hx-swap="outerHTML"
-	>
-		<button id="edit-script" type="button">
-			Edit Script
-		</button>
-
-		<button id="save-script" type="button" style="display: none;">
-			Save Script
-		</button>
-
-		<input
-			type="hidden"
-			name="script_text"
-			id="script-text-input"
-			value="{{ performance.script }}" />
-	</form>
-
 	<button
 		id="generate-dialogue"
 		hx-post="{% url 'generate_dialogue' performance.id %}"
@@ -69,6 +48,37 @@
 		Start Performance
 	</button>
 {% endif %}
+
+	<form
+		id="edit-script-form"
+		hx-post="{% url 'edit_script' performance.id %}"
+		hx-target="#performance-script-text"
+		hx-swap="outerHTML"
+	>
+		<button
+			id="edit-script"
+			type="button"
+			onclick="editScript()"
+		>
+			Edit Script
+		</button>
+
+		<button
+			id="save-script"
+			class="btn btn-add"
+			type="button"
+			style="display: none;"
+			onclick="saveScript()"
+		>
+			Save Script
+		</button>
+
+		<input
+			type="hidden"
+			name="script_text"
+			id="script-text-input"
+			value="{{ performance.script }}" />
+	</form>
 
 	<div class="htmx-indicator">
 		<div class="htmx-indicator-content">

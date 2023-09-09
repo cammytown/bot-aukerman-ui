@@ -1,5 +1,10 @@
 import time
 from typing import Optional
+
+from asgiref.sync import async_to_sync
+
+from channels.layers import get_channel_layer
+
 from bot_aukerman import Performance,\
         BotPerformer,\
         HumanPerformer
@@ -10,10 +15,12 @@ from .service import Service
 class PerformanceService(Service):
     performance: Optional[Performance]
     performance_model: Optional[PerformanceModel]
+    # channel_layer: Optional[object]
 
     def __init__(self):
         super().__init__('PerformanceService')
         self.performance = None
+        self.performance_model = None
 
     def start(self, performance_model: PerformanceModel):
         if self.running == True:
@@ -80,8 +87,25 @@ class PerformanceService(Service):
                 # Add dialogue to database
                 self.add_components(components)
 
+                # Communicate dialogue to client
+                channel_layer = get_channel_layer()
+                async_to_sync(channel_layer.group_send)(
+                    "new_dialogue",
+                    {
+                        "type": "dialogue.message",
+                    }
+                )
+
                 # Generate dialogue for bot character(s)
                 bot_dialogue = self.generate_dialogue()
+
+                # Communicate dialogue to client
+                async_to_sync(channel_layer.group_send)(
+                    "new_dialogue",
+                    {
+                        "type": "dialogue.message",
+                    }
+                )
 
             # Sleep briefly
             time.sleep(0.1)

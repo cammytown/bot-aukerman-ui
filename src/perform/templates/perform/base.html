@@ -14,7 +14,11 @@
 		{% block head %}{% endblock %}
 	</head>
 
-	<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+	<body
+		hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+		data-page="{{ page }}"
+		{% block body_attributes %}{% endblock %}
+	>
 		<nav id="main-menu">
 			<a id="logo" href="{% url 'index' %}">Bot Aukerman</a>
 
@@ -26,7 +30,7 @@
 
 		{% block content_header %}{% endblock %}
 
-		<div id="content" class="{% block content_class %}{% endblock %}">
+		<div id="content" class="{{ page }}">
 			{% block content %}{% endblock %}
 		</div>
 	</body>
