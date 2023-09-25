@@ -17,7 +17,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
-        
+
         # Send message to group
         await self.channel_layer.group_send(
             "new_dialogue",

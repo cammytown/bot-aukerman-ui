@@ -13,16 +13,31 @@
 
 input, textarea {
 	width: 100%;
+}
+
+input, textarea, select {
     padding: 12px 20px;
     margin: 8px 0;
     box-sizing: border-box;
     border: 1px solid #ccc;
 	background-color: #eaedfe;
+	font-size: 1.1em;
+}
+
+textarea {
+	font-size: 1.3em;
+}
+
+label {
+	font-size: 1.3em;
 }
 
 fieldset {
 	/*border: 0;*/
-	//background-color: #b6b7db;
+	//border: 1px solid $purp-bg-alt2;
+	border: 1px solid $black-purple;
+	//border: 1px solid $white;
+	margin: 20px 0;
 	background-color: $purp-bg-alt;
 
 	//&.characters {
@@ -30,6 +45,9 @@ fieldset {
 	//}
 
 	legend {
-		margin-left: 10px;
+		margin-left: -20px;
+		background-color: $purp-bg;
+		padding: 0 10px 5px;
+		font-size: 1.3em;
 	}
 }

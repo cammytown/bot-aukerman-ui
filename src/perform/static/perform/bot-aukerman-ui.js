@@ -12,16 +12,27 @@ window.addEventListener('load', function() {
 
 function addShortcutKeys() {
 	document.addEventListener('keydown', function(e) {
+		//@TODO hacky way to accomplish functionality
+
 		// Ctrl + Enter
 		if (e.ctrlKey && e.keyCode == 13) {
+			// Click generate dialogue button
+			document.getElementById('generate-dialogue').click();
+
 			// Click the start button
-			document.getElementById('start-performance').click();
+			//document.getElementById('start-performance').click();
+		}
+
+		// Ctrl + M
+		if (e.ctrlKey && e.keyCode == 77) {
+			// Toggle microphone listening
+			document.getElementById('toggle-microphone').click();
 		}
 
 		// Ctrl + Space
 		if (e.ctrlKey && e.keyCode == 32) {
-			// Toggle microphone listening
-			document.getElementById('toggle-microphone').click();
+			// Interrupt audio
+			document.getElementById('interrupt-audio').click();
 		}
 	});
 }
@@ -79,6 +90,7 @@ function initPerformanceWebsocket() {
 	let websocket = new WebSocket(url);
 
 	websocket.onopen = function() {
+		console.log('Websocket opened');
 	};
 
 	websocket.onmessage = function(e) {

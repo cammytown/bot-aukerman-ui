@@ -1,15 +1,17 @@
 form.new-performance {
-	.characters {
+	fieldset.characters {
+		padding: 10px 0;
+
 		.character {
-			padding: 10px;
+			padding-bottom: 20px;
 			//margin: 10px 0;
 			margin-bottom: 8px;
 			/*background-color: #fafafa;*/
 
 			&:nth-child(even) {
-				background-color: $purp-bg-alt2;
-				//background-color: $header-bg;
-				//color: $header-text;
+				//background-color: $purp-bg-alt2;
+				background-color: $dark-blue;
+				color: $light-blue;
 			}
 
 			.delete-character {
@@ -17,5 +19,9 @@ form.new-performance {
 				margin-right: 10px;
 			}
 		}
+	}
+
+	#add-character {
+		margin-right: 10px;
 	}
 }

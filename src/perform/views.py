@@ -1,4 +1,5 @@
-from django.shortcuts import render
+import os
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 from .performance_service import PerformanceService
@@ -9,11 +10,19 @@ from .models import \
 
 service = PerformanceService()
 
-
 def index(request):
     return render(request, "perform/index.html", {
         "page": "index",
         "performances": PerformanceModel.objects.all()
+    })
+
+def settings(request):
+    # Check if OpenAI API key env var is set
+    openai_api_key = os.environ.get("OPENAI_API_KEY")
+
+    return render(request, "perform/settings.html", {
+        "page": "settings",
+        "openai_api_key": openai_api_key,
     })
 
 def performance(request, performance_id):
@@ -46,13 +55,17 @@ def create_performance(request):
         # For each character, create a BotPerformer
         character_names = POST.getlist("character_names[]")
         character_descs = POST.getlist("character_descriptions[]")
+        character_models = POST.getlist("character_performer_types[]")
 
         # Create Character database entries
         characters: list[Character] = []
-        for name, desc in zip(character_names, character_descs):
+        for name, desc, model in zip(character_names,
+                                     character_descs,
+                                     character_models):
             character_model = Character(
                 name=name,
                 description=desc,
+                performer=model,
             )
             character_model.save()
             characters.append(character_model)
@@ -81,7 +94,15 @@ def create_performance(request):
 
         performance_model.save()
 
-        return HttpResponse(performance_model.id)
+        return redirect("performance", performance_id=performance_model.id)
+
+def delete_performance(request, performance_id):
+    print("Deleting performance")
+
+    performance_model = PerformanceModel.objects.get(id=performance_id)
+    performance_model.soft_delete()
+
+    return HttpResponse("Deleted performance")
 
 def start_performance(request, performance_id):
     print("Starting performance")

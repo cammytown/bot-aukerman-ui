@@ -1,0 +1,29 @@
+ul.performances {
+	padding: 0;
+	list-style: none;
+
+	li.performance {
+		margin-bottom: 8px;
+		background-color: $purp-bg-alt;
+
+		&:nth-child(even) {
+			background-color: $purp-bg-alt2;
+		}
+
+		a {
+			display: block;
+			padding: 10px;
+			text-decoration: none;
+			color: $site-header-bg;
+			//font-weight: bold;
+			font-size: 1.2em;
+
+			&:hover {
+				background-color: $site-header-bg;
+				color: $site-header-text;
+				//background-color: $body-bg;
+				//color: $button-bg-alt;
+			}
+		}
+	}
+}

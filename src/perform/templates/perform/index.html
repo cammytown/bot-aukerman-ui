@@ -3,14 +3,17 @@
 {% block title %}Bot Aukerman{% endblock %}
 
 {% block content %}
-<h2>Performances</h2>
-
-<a href="{% url 'create_performance' %}">Create Performance</a>
+<header>
+	<h2>Performances</h2>
+	<a href="{% url 'create_performance' %}" class="btn btn-add btn-sup">
+		+ Create Performance
+	</a>
+</header>
 
 {% if performances %}
-	<ul>
+	<ul class="performances">
 		{% for performance in performances %}
-			<li>
+			<li class="performance">
 				<a href="{% url 'performance' performance.id %}">
 					{% if performance.title %}
 						{{ performance.title }}

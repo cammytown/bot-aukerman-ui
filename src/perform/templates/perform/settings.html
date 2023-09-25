@@ -1,0 +1,45 @@
+{% extends "perform/base.html" %}
+
+{% block title %}Settings - Bot Aukerman{% endblock %}
+
+{% block content %}
+<header>
+	<h1>Settings</h1>
+</header>
+
+<div id="openai-settings">
+	<h2>OpenAI</h2>
+	<form action="{% url 'settings' %}" method="post">
+		{% csrf_token %}
+
+		{% if openai_api_key %}
+		<p>
+			Your <code>OPENAI_API_KEY</code> environment variable has been set.
+
+			{% comment %}#@TODO: explanation for non-technical users{% endcomment %}
+		</p>
+
+		{% else %}
+		<p>
+			OpenAI API key environment variable is not set.
+		</p>
+
+		<p>
+			Bot Aukerman uses the <code>OPENAI_API_KEY</code> environment
+			variable to authenticate with the OpenAI API. You can set it here,
+			or (more safely) set it manually in your environment/terminal.
+
+			{% comment %}#@TODO: explanation for non-technical users{% endcomment %}
+		</p>
+
+		<p>
+			<label for="openai-api-key">OpenAI API key:</label>
+			<input type="text" name="openai-api-key" id="openai-api-key" />
+
+			<button type="submit" name="openai" value="set">
+				Set OpenAI API key
+			</button>
+		</p>
+		{% endif %}
+	</form>
+{% endblock %}

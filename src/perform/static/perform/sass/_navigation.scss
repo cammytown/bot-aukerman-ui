@@ -3,13 +3,13 @@ nav#main-menu {
 	justify-content: space-between;
 	align-items: center;
 	padding: 10px;
-	background-color: $header-bg;
+	background-color: $site-header-bg;
 
 	a {
 		//padding: 10px;
 		margin: 0 10px;
 		text-decoration: none;
-		color: $header-text;
+		color: $site-header-text;
 
 		&:hover {
 			color: $white;

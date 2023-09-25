@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("settings", views.settings, name="settings"),
 
     # Characters
     path("add_character", views.add_character, name="add_character"),
@@ -21,6 +22,10 @@ urlpatterns = [
          views.create_performance,
          name="create_performance"),
 
+    path("delete_performance/<int:performance_id>",
+            views.delete_performance,
+            name="delete_performance"),
+
     path("start_performance/<int:performance_id>",
             views.start_performance,
             name="start_performance"),
@@ -37,6 +42,11 @@ urlpatterns = [
             views.edit_script,
             name="edit_script"),
 
+    path("get_performance_status",
+         views.get_performance_status,
+         name="get_performance_status"),
+
+    # Performance Controls
     path("generate_dialogue/<int:performance_id>",
             views.generate_dialogue,
             name="generate_dialogue"),
@@ -45,11 +55,6 @@ urlpatterns = [
             views.interrupt,
             name="interrupt"),
 
-    path("get_performance_status",
-         views.get_performance_status,
-         name="get_performance_status"),
-
-    # Controls
     path("toggle_microphone",
          views.toggle_microphone,
          name="toggle_microphone"),

@@ -30,26 +30,66 @@ class PerformanceService(Service):
         self.performance_model = performance_model
 
         # Create a Performance
-        model_config = {
-            "model": "gpt2-large",
-            "use_cuda": True, #@REVISIT!
-            "max_context_length": 200, #@REVISIT!
+        # model_config = {
+        #     "model": "gpt2-large",
+        #     "use_cuda": True, #@REVISIT!
+        #     "max_context_length": 200, #@REVISIT!
+        #     # "model": "gpt2"
+        #     # "model": "gpt4all-7B-unfiltered", "engine": "llamacpp"
+        #     # "model": "text-ada-001", "engine": "openai",
+        #     # "engine": "openai",
+        # }
 
-            # "model": "gpt2"
-            # "model": "gpt4all-7B-unfiltered", "engine": "llamacpp"
-            # "model": "text-ada-001", "engine": "openai",
-            # "engine": "openai",
-        }
+        # performance = Performance(model_config = model_config,
+        #                           resume_from_log = False)
 
-        performance = Performance(model_config = model_config,
-                                  resume_from_log = False)
+        performance = Performance(resume_from_log = False)
 
         # Add characters
         for character in self.performance_model.characters.all():
-            character = BotPerformer(
-                character_name=character.name,
-                character_desc=character.description,
-            )
+            # If character is human
+            if(character.performer == 'human'):
+                character = HumanPerformer(
+                    character_name=character.name,
+                    character_desc=character.description,
+                )
+
+            # Otherwise, assume `performer` is a model name
+            #@REVISIT architecture
+            else:
+                #@REVISIT architecture
+                match character.performer:
+                    case 'gpt2' | 'gpt2-medium' | 'gpt2-large':
+                        model_config = {
+                            "model": character.performer,
+                            "use_cuda": True, #@REVISIT!
+                            "max_context_length": 200, #@REVISIT!
+                        }
+
+                        character = BotPerformer(
+                            character_name=character.name,
+                            character_desc=character.description,
+                            model_config=model_config,
+                        )
+
+                    case 'text-davinci-003' | 'gpt-3.5-turbo':
+                        model_config = {
+                            "model": character.performer,
+                            "engine": "openai",
+                            #@REVISIT naming:
+                            "api_env_var": "OPENAI_API_KEY",
+                        }
+
+                        character = BotPerformer(
+                            character_name=character.name,
+                            character_desc=character.description,
+                            model_config=model_config,
+                        )
+
+                    case _:
+                        raise Exception(
+                            f"Unknown performer type {character.performer}"
+                        )
 
             performance.add_performer(character)
 
@@ -64,10 +104,6 @@ class PerformanceService(Service):
         # performance.add_dialogue(context)
 
         performance.load_script_string(self.performance_model.script)
-
-        # Add a human performer
-        human = HumanPerformer(character_name="Cammy")
-        performance.add_performer(human)
 
         self.performance = performance
 

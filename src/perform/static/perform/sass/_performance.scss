@@ -4,6 +4,21 @@ header#performance-header {
 	padding: 15px;
 	//background-color: $purp-bg;
 	background-color: $purp-bg-alt;
+
+	h2 {
+		display: inline-block;
+		margin-right: 10px;
+	}
+
+	//#delete-performance {
+	//    display: none;
+	//}
+
+	//&:hover {
+	//    #delete-performance {
+	//        display: inline-block;
+	//    }
+	//}
 }
 
 //#performance-controls {

@@ -1,11 +1,28 @@
+// Colors
 $white: #fdfdfd;
+$dark-blue: #201e37;
+$light-blue: #a8a8d1;
+
 $purp-bg: #e2e2fd;
 $purp-bg-alt: #c1c1dd;
 $purp-bg-alt2: #afb1d0;
 
-// Header
-$header-bg: #201e37;
-$header-text: #a8a8d1;
+$black-purple: #240648;
+
+// Backgrounds
+$body-bg: $purp-bg;
+//$body-lg: linear-gradient(to bottom, $body-bg 0%, $body-bg 90%, rgba($body-bg, 0));
+$body-img: url('/static/perform/img/bg.png') repeat-x bottom center;
+
+// Text
+$text-color: #050505;
+
+// Header Nav
+$site-header-bg: $dark-blue;
+$site-header-text: $light-blue;
+
+// Headings
+$heading-color: $black-purple;
 
 // Buttons
 $button-text: $purp-bg; //#d6d3ea; //#9a9bd0;

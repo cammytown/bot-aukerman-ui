@@ -5,30 +5,37 @@
 {% block content %}
 <form
 	class="new-performance"
-	hx-post="{% url 'create_performance' %}"
+	id="new-performance"
+	method="post"
+	action="{% url 'create_performance' %}"
+
+	{% comment %}hx-get="{% url 'create_performance' %}"{% endcomment %}
+	{% comment %}hx-post="{% url 'create_performance' %}"{% endcomment %}
 	{% comment %}hx-target="#performance"{% endcomment %}
-	hx-swap="outerHTML"
+	{% comment %}hx-swap="outerHTML"{% endcomment %}
 >
+	{% csrf_token %}
+
 	<h1>Perform</h1>
 
 	<fieldset>
-		<legend>Performance</legend>
+		<legend>Performance Title</legend>
 
-		<label for="performance_title">Title</label>
+		{% comment %}<label for="performance_title">Title</label>{% endcomment %}
 
 		<input
 			type="text"
 			class="form-control"
 			id="performance_title"
 			name="performance_title"
-			placeholder="Dumb Ass"
+			placeholder="Dim Magic"
 		/>
 	</fieldset>
 
 	<fieldset>
-		<legend>Scene</legend>
+		<legend>Scene Description</legend>
 
-		<label for="scene_description">Scene Description</label>
+		{% comment %}<label for="scene_description">Scene Description</label>{% endcomment %}
 
 		<textarea
 			class="form-control"
@@ -38,10 +45,10 @@
 			placeholder="A magic donkey and a man sit in the middle of a hot desert."></textarea>
 	</fieldset>
 
-	<fieldset>
+	<fieldset class="characters">
 		<legend>Characters</legend>
 
-		<div class="characters">
+		<div>
 			{% include "perform/_add_character.html" %}
 		</div>
 	</fieldset>
@@ -49,16 +56,16 @@
 	<fieldset>
 		<legend>Starting Script</legend>
 
-		<label>
+		<p>
 			Providing an initial context script usually improves the output of
 			most chatbots / <abbr>LLMs</abbr> (large-language models).
-		</label>
+		</p>
 
 		<textarea
 			class="form-control"
 			id="context"
 			name="context_script"
-			rows="5"
+			rows="10"
 			placeholder="MAN: Well, this sucks.
 MAGIC DONKEY: What?
 MAN: Being stuck in the middle of the desert.

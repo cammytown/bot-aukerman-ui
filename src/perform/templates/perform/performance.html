@@ -7,6 +7,17 @@
 	<div class="container">
 		<h2>{{ performance.title }}</h2>
 
+		<button
+			id="delete-performance"
+			class="btn btn-delete btn-small btn-sup"
+			type="button"
+			hx-delete="{% url 'delete_performance' performance.id %}"
+			hx-target="#performance-controls"
+			hx-swap="outerHTML"
+		>
+			Delete Performance
+		</button>
+
 		<p>
 			<em>{{ performance.scenes.last.description }}</em>
 		</p>
@@ -53,20 +64,24 @@
 {% comment %}</div>                                {% endcomment %}
 
 <div id="performance-script">
-	<h3>Performance Script</h3>
+	<h3>Script</h3>
 
 	{% include "perform/_performance_script.html" %}
 </div>
-{% endblock %}
 
 <div id="hotkeys">
 	<ul>
 		<li>
-			<kbd>Ctrl</kbd> + <kbd>Enter</kbd> - Start Performance
+			<kbd>Ctrl</kbd> + <kbd>Enter</kbd> - Generate Bot Dialogue
 		</li>
 
 		<li>
-			<kbd>Ctrl</kbd> + <kbd>Space</kbd> - Toggle Microphone Listen
+			<kbd>Ctrl</kbd> + <kbd>M</kbd> - Toggle Microphone Listen
+		</li>
+
+		<li>
+			<kbd>Ctrl</kbd> + <kbd>Space</kbd> - Interrupt Audio
 		</li>
 	</ul>
 </div>
+{% endblock %}
